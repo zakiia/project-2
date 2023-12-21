@@ -4,6 +4,7 @@ const formatFoodItem = (item, type = "meal" | "dessert" | "beverage") => {
       foodId: item.idMeal,
       foodName: item.strMeal,
       foodImage: item.strMealThumb,
+      foodPrice: item.price,
       type,
     };
   } else if (type === "beverage") {
@@ -11,6 +12,7 @@ const formatFoodItem = (item, type = "meal" | "dessert" | "beverage") => {
       foodId: item.idDrink,
       foodName: item.strDrink,
       foodImage: item.strDrinkThumb,
+      foodPrice: item.price,
       type,
     };
   }
@@ -61,10 +63,6 @@ const searchFood = () => {
         if (data.meals) {
           globalFoods.splice(0, globalFoods.length);
 
-          data.meals.forEach((element) => {
-            globalFoods.push(formatFoodItem(element, "meal"));
-          });
-
           displaySearchResult(data.meals);
           const removeMain = document.getElementById("remove-main");
           removeMain.remove();
@@ -92,7 +90,7 @@ const mainMeal = () => {
       for (let i = 0; i < 3; i++) {
         const price = getPin();
         const meal = data.meals[i];
-        globalFoods.push(formatFoodItem(meal, "meal"));
+        globalFoods.push(formatFoodItem({ ...meal, price }, "meal"));
         const div = document.createElement("div");
         div.classList.add("col");
         div.innerHTML = `
@@ -128,7 +126,7 @@ const dessertItem = () => {
       for (let i = 0; i < 3; i++) {
         const price = getPin();
         const meal = data.meals[i];
-        globalFoods.push(formatFoodItem(meal, "dessert"));
+        globalFoods.push(formatFoodItem({ ...meal, price }, "dessert"));
         const div = document.createElement("div");
         div.classList.add("col");
         div.innerHTML = `
@@ -166,7 +164,7 @@ const beverageItem = () => {
       for (let i = 0; i < 3; i++) {
         const price = getPin();
         const drink = data.drinks[i];
-        globalFoods.push(formatFoodItem(drink, "beverage"));
+        globalFoods.push(formatFoodItem({ ...drink, price }, "beverage"));
         const div = document.createElement("div");
         div.classList.add("col");
         div.innerHTML = `
@@ -233,7 +231,6 @@ const orderNowHTML = () => {
   listCartHTML.innerHTML = "";
   if (cartItem.length > 0) {
     cartItem.forEach((cart) => {
-      const price = getPin();
       cartTotalItem += cart.count;
       let newCart = document.createElement("div");
       newCart.classList.add("item");
@@ -245,12 +242,16 @@ const orderNowHTML = () => {
             ${cart.foodName}
           </div>
           <div class="totalPrice">
-          ${price}Tk
+          ${cart.foodPrice * cart.count}Tk
           </div>
           <div class="quantity">
-            <span class="minus" onclick="addToCart(${cart.foodId}, 'dec')">-</span>
+            <span class="minus" onclick="addToCart(${
+              cart.foodId
+            }, 'dec')">-</span>
             <span>${cart.count}</span>
-            <span class="plus" onclick="addToCart(${cart.foodId}, 'inc')">+</span>
+            <span class="plus" onclick="addToCart(${
+              cart.foodId
+            }, 'inc')">+</span>
           </div>`;
       listCartHTML.appendChild(newCart);
     });
@@ -263,6 +264,7 @@ const displaySearchResult = (meals) => {
 
   meals.forEach((meal) => {
     const price = getPin();
+    globalFoods.push(formatFoodItem({ ...meal, price }, "meal"));
     const div = document.createElement("div");
     div.classList.add("col");
     div.innerHTML = `
