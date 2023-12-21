@@ -1,3 +1,20 @@
+let globalFoods = []
+let cartItem = []
+let listCartHTML = document.querySelector('.listCart')
+let iconSpanCart = document.querySelector('.shopping span')
+
+let shopping = document.querySelector('.shopping');
+let closeCart = document.querySelector('.close')
+let body = document.querySelector('body')
+const openCart = document.getElementById('open-cart')
+shopping.addEventListener('click', () =>{
+    openCart.classList.toggle('none')
+})
+
+closeCart.addEventListener('click',() =>{
+    console.log(`??????????`);
+    openCart.classList.toggle('none')
+})
 
 function getPin(){
     const pin = Math.round(Math.random() * 1000)
@@ -23,6 +40,9 @@ const searchFood = () => {
         .then (res => res.json())
         .then (data => {
             if (data.meals) {
+                globalFoods.splice(0, globalFoods.length)
+                globalFoods.push(...data.meals)
+
                 displaySearchResult(data.meals)
                 const removeMain = document.getElementById('remove-main')
                 removeMain.remove()
@@ -31,11 +51,8 @@ const searchFood = () => {
                 const removeBeverage = document.getElementById('remove-beverage')
                 removeBeverage.remove()
             } else {
-                
                 displayText.style.display = 'block';
                 searchError.style.display = 'none';
-
-
             }
         })
     } else {
@@ -53,6 +70,7 @@ const mainMeal = () => {
         for (let i = 0; i < 3; i++) {
             const price = getPin();
             const meal = data.meals[i];
+            globalFoods.push(meal)
             const div = document.createElement('div')
             div.classList.add('col')
             div.innerHTML =`
@@ -63,7 +81,12 @@ const mainMeal = () => {
                 <h5>${price}Tk</h5>
                 </div>
                 <div class="m-3">
-                <button class="foodZone-btn-orderNow">Order Now</button>
+                <button
+                    class="foodZone-btn-orderNow"
+                    onclick='orderNow("idMeal", ${meal.idMeal})'
+                >
+                    Order Now
+                </button>
                 </div>
             </div>`
             mainMealContent.appendChild(div)
@@ -71,7 +94,6 @@ const mainMeal = () => {
     })
 
 }
-
 mainMeal()
 
 const dessertItem = () => {
@@ -83,6 +105,7 @@ const dessertItem = () => {
         for (let i = 0; i < 3; i++) {
             const price = getPin();
             const meal = data.meals[i];
+            globalFoods.push(meal)
             const div = document.createElement('div')
             div.classList.add('col')
             div.innerHTML =`
@@ -93,7 +116,12 @@ const dessertItem = () => {
                 <h5>${price}Tk</h5>
                 </div>
                 <div class="m-3">
-                <button class="foodZone-btn-orderNow">Order Now</button>
+                <button
+                    class="foodZone-btn-orderNow"
+                    onclick='orderNow("idMeal", ${meal.idMeal})'
+                >
+                    Order Now
+                </button>
                 </div>
             </div>`
             dessertItemContainer.appendChild(div)
@@ -101,7 +129,6 @@ const dessertItem = () => {
     })
 
 }
-
 dessertItem()
 
 const beverageItem = () => {
@@ -113,6 +140,7 @@ const beverageItem = () => {
         for (let i = 0; i < 3; i++) {
             const price = getPin();
             const drink = data.drinks[i];
+            globalFoods.push(drink)
             const div = document.createElement('div')
             div.classList.add('col')
             div.innerHTML =`
@@ -123,16 +151,55 @@ const beverageItem = () => {
                 <h5>${price}Tk</h5>
                 </div>
                 <div class="m-3">
-                <button class="foodZone-btn-orderNow">Order Now</button>
+                <button
+                    class="foodZone-btn-orderNow"
+                    onclick='orderNow("idDrink", ${drink.idDrink})'
+                >
+                    Order Now
+                </button>
                 </div>
             </div>`
             beverageItemContainer.appendChild(div)
         }
     })
+}
+beverageItem()
 
+
+
+const orderNow = (key, mealId) => {
+    
+    const item = globalFoods.find((i) => i[key] == mealId)
+    cartItem.push(item)
+    orderNowHTML()
 }
 
-beverageItem()
+const orderNowHTML = () => {
+    listCartHTML.innerHTML = '';
+    if (cartItem.length > 0){
+        cartItem.forEach(cart =>{
+            const price = getPin();
+            let newCart = document.createElement('div');
+            newCart.classList.add('item');
+            newCart.innerHTML = `
+            <div class="image">
+            <img src="${cart.strMealThumb}" alt="">
+          </div>
+          <div class="name">
+            Name
+          </div>
+          <div class="totalPrice">
+          ${price}Tk
+          </div>
+          <div class="quantity">
+            <span class="minus">-</span>
+            <span>1</span>
+            <span class="plus">+</span>
+          </div>`;
+          listCartHTML.appendChild(newCart)
+        })
+    }
+}
 
 
 const displaySearchResult = meals => {
@@ -150,7 +217,12 @@ const displaySearchResult = meals => {
             <h5>${price}TK</h5>
             </div>
             <div class="m-3">
-            <button class="foodZone-btn-orderNow">Order Now</button>
+            <button
+                class="foodZone-btn-orderNow"
+                onclick='orderNow("idMeal", ${meal.idMeal})'
+            >
+                Order Now
+            </button>
             </div>
         </div>`
         searchResult.appendChild(div)

@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
-<body>
-    <header>
+<body class="showCart">
+    <header">
       <div class="navbar-container">
         <nav class="navbar bg-body-tertiary">
           <div class="container-fluid">
@@ -23,69 +23,85 @@
           </div>
         </nav>      
       </div>
-
-      <section class="container">
-        <div id="carouselExample" class="carousel slide bg-danger-subtle">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <div class="row p-5 panda-bg-info bg-gradient d-flex align-items-center">
-                <div class="col-lg-7"> 
-                    <h1>Welcome To FoodZone</h1>
-                    <p>We are trying our level best to providing you the best delicious meal in the town that your stomach craving for by maintaing high standards of hygiene and keeping concern about nutrition, protein and calories.</p>
-                    <input id="search-field" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button onclick="searchFood()" class="foodZone-btn-orderNow mt-2">Search</button>
-                </div>
-                <div class="col-lg-5 logo-large">
-                  <img src="img/logo.jpg" class="d-block w-100" alt="...">
+    </header>
+      <div class="container-main">
+        
+        <section class="container">
+          <div id="carouselExample" class="carousel slide bg-danger-subtle">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="row p-5 panda-bg-info bg-gradient d-flex align-items-center">
+                  <div class="col-lg-7"> 
+                      <h1>Welcome To FoodZone</h1>
+                      <p>We are trying our level best to providing you the best delicious meal in the town that your stomach craving for by maintaing high standards of hygiene and keeping concern about nutrition, protein and calories.</p>
+                      <input id="search-field" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                      <button onclick="searchFood()" class="foodZone-btn-orderNow mt-2">Search</button>
+                  </div>
+                  <div class="col-lg-5 logo-large">
+                    <img src="img/logo.jpg" class="d-block w-100" alt="...">
+                  </div>
                 </div>
               </div>
-            </div>
-      </section>
-    </header>
-
-    <main>
-      <div id="search-result" class="row row-cols-1 row-cols-md-3 g-4 m-5">    
-      </div>
-
-      <p id="search-error" class="search-field text-center mt-5"> Please Write Something to display</p>
-
-      <div id="display-text" class="display-text">
-        <p class="text-center mt-5">No Result found</p>
-    </div>
-
-    
-        <section class="container mt-5" id="remove-main">
-          <h2 class="mb-5">Appetizer Items</h2>
-          <div class="row row-cols-1 row-cols-md-3 g-4" id="main-meal-content">
-            
-          </div>
         </section>
+     
   
-        <section class="container mt-5" id="remove-dessert">
-          <h2 class="mb-5">Dessert Items</h2>
-          <div class="row row-cols-1 row-cols-md-3 g-4" id="dessert-item-container">
-          </div>
-        </section>
-  
-        <section class="container mt-5" id="remove-beverage">
-          <h2 class="mb-5">Beverage Items</h2>
-          <div class="row row-cols-1 row-cols-md-3 g-4" id="beverage-item-container">
-            
-          </div>
-        </section>
-      
-
-      <section style="height: 300px;" class="bg-danger-subtle container panda-bg-info d-flex justify-content-center align-items-center rounded-3 mt-5" id="subscribe">
-        <div>
-          <h1>LET'S STAY IN TOUCH</h1>
-          <p>Get upadate on offers and  discounts, specials and more </p>
-          <input class="form-control" type="text" placeholder="Your Email">
-          <br>
-          <button class="foodZone-btn-orderNow">SUBMIT</button>
+      <main">
+        <div id="search-result" class="row row-cols-1 row-cols-md-3 g-4 m-5">    
         </div>
+  
+        <p id="search-error" class="search-field text-center mt-5"> Please Write Something to display</p>
+  
+        <div id="display-text" class="display-text">
+          <p class="text-center mt-5">No Result found</p>
+      </div>
+  
+      
+          <section class="container mt-5" id="remove-main">
+            <h2 class="mb-5">Appetizer Items</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="main-meal-content">
+              
+            </div>
+          </section>
+    
+          <section class="container mt-5" id="remove-dessert">
+            <h2 class="mb-5">Dessert Items</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="dessert-item-container">
+            </div>
+          </section>
+    
+          <section class="container mt-5" id="remove-beverage">
+            <h2 class="mb-5">Beverage Items</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="beverage-item-container">
+              
+            </div>
+          </section>
         
-      </section>
-    </main>
+  
+        <section style="height: 300px; transition: transform .5s;" class="bg-danger-subtle container panda-bg-info d-flex justify-content-center align-items-center rounded-3 mt-5" id="subscribe">
+          <div>
+            <h1>LET'S STAY IN TOUCH</h1>
+            <p>Get upadate on offers and  discounts, specials and more </p>
+            <input class="form-control" type="text" placeholder="Your Email">
+            <br>
+            <button class="foodZone-btn-orderNow">SUBMIT</button>
+          </div>
+          
+        </section>
+      </main>
+  
+      </div>
+    <div class="cartTab none" id="open-cart">
+      <h1>Shopping Cart</h1>
+      <div class="listCart">
+        <div class="item">
+          
+        </div>
+      </div>
+      <div class="btn">
+        <button class="close">CLOSE</button>
+        <button class="checkout">CHECK OUT</button>
+      </div>
+    </div>
     <footer class="mt-5 text-center">
       <p><small>@2023. FoodZone. All rights reserved. Zakia, Bangladesh</small></p>
   </footer>
